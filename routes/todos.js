@@ -5,7 +5,10 @@ var todoModel = require("../models/todos");
 var {auth}=require("../middlewares/auth")
 var { getById, create } = require("../controllers/todos");
 
+//authentication middleware
 router.use(auth)
+
+// todos and pupulate 
 router.get("/", function (req, res) {
   todoModel
     .find().populate("userId")
@@ -17,6 +20,7 @@ router.get("/", function (req, res) {
     });
 });
 
+// git todo by id
 router.get("/:id", async function (req, res, next) {
   try {
     var todoId = req.params.id;
@@ -29,6 +33,7 @@ router.get("/:id", async function (req, res, next) {
   }
 });
 
+// create todo
 router.post("/", async function (req, res, next) {
   try {
     var newTodo = {title:req.body.title,userId:req.userId};
@@ -46,6 +51,8 @@ router.post("/", async function (req, res, next) {
 
   // })
 });
+
+//update todo by id
 
 router.patch("/:id", function (req, res, next) {
   var todoId = req.params.id;
